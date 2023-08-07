@@ -27,7 +27,7 @@ ADIM 2:
   Eğer sayici çiftse "royalblue", değilse "crimson" olmalıdır.
 
 ADIM 3:
-  JSX'teki bazı sabit kodlanmış bilgileri, kıvrımlı parantezler ({}) içinde enterpolasyonlu ifadelerle değiştirmemiz gerekiyor.
+  JSX'teki bazı sabit kodlanmış bilgileri, kıvrımlı parantezler ({}) içinde enterpolasyonlu ifadelerle değiştirmemiz gerekiyor.   // ----> Burada dediği enterpolasyon; string enterpolasyonudur. yani ---> "${}"
   Sabit olarak yazılmış "0" sayısını {sayici} değişkeni ile değiştirerek başlayın.
   Sonra "çift" kelimesini şu kurala göre değiştirin: {eğer sayıcı çiftse, kelime `çift` değilse `tek` olacak}.
 
@@ -45,32 +45,34 @@ ADIM 6:
 	Bu click handler 'sayici' yı sıfırlamak için 'setSayici' yi kullanacak.
 */
 
-import React from 'react'; /* ADIM 0 buraya*/
+import React, {useState} from 'react'; /* ADIM 0 buraya*/
 
 export default function Sayac() {
   /* ADIM 1 buraya*/
-	
+	const [sayici, setSayici] = useState(0) // burada useState değerimizi yani ilk değerimizi 0 olarak tanımlıyoruz
 	
   const artirici = () => {
-    /* ADIM 4 buraya */
+    setSayici(sayici + 1);   // Burada biz verimizi güncellemek istiyoruz eğer --> sayici +1 veya sayici = sayici +1 dersek aşağıdaki sayici yazılan yerleride değiştirir. Bu yüzden biz verimizi güncel tutmak istediğimiz için "setSayici(sayici +1) diyoruz."
   };
   const azaltici = () => {
     /* ADIM 5 */
+    setSayici(sayici - 1); 
   };
   const reset = () => {
+    setSayici(0);
   };
 
   const stil = {
     fontSize: '1.5em',
     marginBottom: '0.3em',
-    color: 'royalblue', /* ADIM 2 */
+    color: sayici % 2 ==0 ?'royalblue': 'crimson' /* ADIM 2 */ // burada "ternary operator" kullanıyoruz. Bu yapı if-else kısa modu diyebiliriz.
   };
 
   return (
     <div className='widget-counter container'>
       <h2>Sayaç</h2>
       <div id='sayici' style={stil}>
-        Sayı {sayici} {/* ADIM 3  buraya*/ }
+        Sayı {sayici} {sayici % 2 ==0 ?'çift': 'tek' }
       </div>
       <div>
         <button id='artirici' onClick={artirici}>Artırıcı</button>
@@ -80,3 +82,4 @@ export default function Sayac() {
     </div>
   );
 }
+// jsx de javascript yapıları süslü parantez içinde yani -> {} içinde yazılır.
